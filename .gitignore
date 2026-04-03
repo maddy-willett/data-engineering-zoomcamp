@@ -207,3 +207,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+#data
+01-docker-terraform/ny_taxi_postgres_data/
