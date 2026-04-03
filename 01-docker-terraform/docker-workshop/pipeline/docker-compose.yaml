@@ -14,6 +14,8 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
+      - PGADMIN_CONFIG_PROXY_X_HOST_COUNT=1 ## to help fix the blank screen bug 
+      - PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT=1
     volumes:
       - "pgadmin_data:/var/lib/pgadmin"
     ports:
@@ -23,7 +25,18 @@ volumes:
   ny_taxi_postgres_data:
   pgadmin_data:
 
-  #have to configure the server once admin loads
+  #have to configure the server once admin loads (use cmnd docker compose up)
   #name: pgdatabase
   #password: root
   #username: root
+
+  #to run the ingestion script run this cmnd
+  # uv run ingest_data.py \
+  #   --pg-user root \
+  #   --pg-pass root \
+  #   --pg-host localhost \
+  #   --pg-port 5432 \
+  #   --pg-db ny_taxi \
+  #   --year 2021 \
+  #   --month 1 \
+  #   --target-table yellow_taxi_data

@@ -37,10 +37,11 @@ def ingest_data(
         target_table: str,
         chunksize: int = 100000,
 ) -> pd.DataFrame:
+    is_taxi = "yellow" in url # to make sure the script does not crash with other urls pasted
     df_iter = pd.read_csv(
         url,
-        dtype=dtype,
-        parse_dates=parse_dates,
+        dtype=dtype if is_taxi else None,
+        parse_dates=parse_dates if is_taxi else None,
         iterator=True,
         chunksize=chunksize
     )
@@ -83,12 +84,17 @@ def ingest_data(
 @click.option('--month', default=1, type=int, help='Month of the data')
 @click.option('--chunksize', default=100000, type=int, help='Chunk size for ingestion')
 @click.option('--target-table', default='yellow_taxi_data', help='Target table name')
-def main(pg_user, pg_pass, pg_host, pg_port, pg_db, year, month, chunksize, target_table):
+@click.option('--url', default=None, help='Direct URL to a CSV file') ## new option for url
+def main(pg_user, pg_pass, pg_host, pg_port, pg_db, year, month, url, chunksize, target_table):
     # Click passes the options directly into these arguments
     engine = create_engine(f'postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}')
-    
-    url_prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow'
-    url = f'{url_prefix}/yellow_tripdata_{year:04d}-{month:02d}.csv.gz'
+
+    # if a direct url is not provided itll automatically run the yellow_taxi url
+    if not url: 
+        url_prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow'
+        url = f'{url_prefix}/yellow_tripdata_{year:04d}-{month:02d}.csv.gz'
+
+    print(f"Starting ingestion for: {url}")
 
     ingest_data(
         url=url,
