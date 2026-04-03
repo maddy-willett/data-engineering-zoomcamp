@@ -1,6 +1,6 @@
 # Data Engineering Zoomcamp 2026
 
-![Status](https://img.shields.io/badge/Zoomcamp-Week%201%20Complete-green)
+![Status](https://img.shields.io/badge/Zoomcamp-Week%201%20Progress-orange)
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
 ![Terraform](https://img.shields.io/badge/Terraform-In%20Progress-orange)
