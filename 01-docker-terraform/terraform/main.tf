@@ -8,13 +8,13 @@ terraform {
 }
 
 provider "google" {
-  project = "nytaxiproject-492423"
-  region  = "us-central1"
+  project = var.project
+  region  = var.region
 }
 
 resource "google_storage_bucket" "project-bucket" {
-  name                        = "nytaxiproject-492423-terra-bucket"
-  location                    = "US"
+  name                        = var.gcs_bucket_name
+  location                    = var.location
   force_destroy               = true
   uniform_bucket_level_access = true
 
