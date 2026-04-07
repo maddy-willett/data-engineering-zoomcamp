@@ -89,43 +89,45 @@ limit 1;
 ```
 
 ### Question 5. Biggest pickup zone
-The pickup zone with the largest `total_amount` (aka sum of all trips) on 2025-11-18 was: **East Harlem North with 434 trips**
+The pickup zone with the largest `total_amount` (aka sum of all trips) on 2025-11-18 was: **East Harlem North**
 
 Here is the query to answer this: 
 ``` sql
-select 
-	z."Zone",
-	count(g."index") as trip_count
+select
+  z."Zone",
+  sum(g.total_amount) as total_amount_sum
 from 
-	green_taxi_data g inner join zones z on g."PULocationID" = z."LocationID"
+  green_taxi_data g iner join zones z on g."PULocationID" = z."LocationID"
 where 
-	cast(lpep_pickup_datetime as date) = '2025-11-18'
+  cast(g.lpep_pickup_datetime as date) = '2025-11-18'
 group by 
-	z."Zone"
+  z."Zone"
 order by 
-	trip_count desc
+  total_amount_sum desc
 limit 1;
 ```
 
 ### Question 6. Largest tip
-For the passengers picked up in East Harlem North on 2025-11-18, the drop off zone that had the largest tip was: **Yorkville West with a tip of ~$82**
+For the passengers picked up in East Harlem North on 2025-11-18, the drop off zone that had the largest tip was: **Yorkville West**
 
 Here is the query to get this answer:
 ``` sql
-select 
-    z_do."Zone" as dropoff_zone,
-    g.tip_amount
-from green_taxi_data g
-inner join zones z_pu
-    on g."PULocationID" = z_pu."LocationID"
-inner join zones z_do
-    on g."DOLocationID" = z_do."LocationID"
+select
+  z_do."Zone" as dropoff_zone,
+   g.tip_amount
+from 
+  green_taxi_data g inner join zones z_pu on g."PULocationID" = z_pu."LocationID"
+  inner join zones z_do on g."DOLocationID" = z_do."LocationID"
 where 
-	z_pu."Zone" = 'East Harlem North'
-  	and cast(lpep_pickup_datetime as date) = '2025-11-18'
+  z_pu."Zone" = 'East Harlem North'
+  and g.lpep_pickup_datetime >= '2025-11-01'
+  and g.lpep_pickup_datetime < '2025-12-01'
 order by 
-	g.tip_amount desc
+  g.tip_amount desc
 limit 1;
 ```
 
 ### Question 7. Terraform Workflow
+The sequence for 1) Downloading the provider plugins and setting up backend, 2) Generating proposed changes and auto-executing the plan, and 3) Remove all resources managed by terraform is:
+
+`terraform innit`, `terraform apply -auto-apply`, `terraform destroy` (you can use `terraform plan` to help visualize all what you're asking for before deploying to your cloud provider.) 
