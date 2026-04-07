@@ -65,3 +65,67 @@ The process to ingesting the new green_taxi & zone datasets into my pgAdmin acco
     ```
 
 ### Question 4. Longest trip for each day
+The pick up day with the longest trip distance (only including trips with `trip_distance` less than 100 miles) was: **2025-11-14**
+
+Here is the query to answer this:
+``` sql 
+  with longest_trip as (
+select 
+	date_trunc('day', lpep_pickup_datetime) as pickup_day,
+	trip_distance
+from 
+	green_taxi_data
+where
+	trip_distance < 100
+)
+
+select 
+	pickup_day
+from 
+	longest_trip
+order by
+	trip_distance desc
+limit 1;
+```
+
+### Question 5. Biggest pickup zone
+The pickup zone with the largest `total_amount` (aka sum of all trips) on 2025-11-18 was: **East Harlem North with 434 trips**
+
+Here is the query to answer this: 
+``` sql
+select 
+	z."Zone",
+	count(g."index") as trip_count
+from 
+	green_taxi_data g inner join zones z on g."PULocationID" = z."LocationID"
+where 
+	cast(lpep_pickup_datetime as date) = '2025-11-18'
+group by 
+	z."Zone"
+order by 
+	trip_count desc
+limit 1;
+```
+
+### Question 6. Largest tip
+For the passengers picked up in East Harlem North on 2025-11-18, the drop off zone that had the largest tip was: **Yorkville West with a tip of ~$82**
+
+Here is the query to get this answer:
+``` sql
+select 
+    z_do."Zone" as dropoff_zone,
+    g.tip_amount
+from green_taxi_data g
+inner join zones z_pu
+    on g."PULocationID" = z_pu."LocationID"
+inner join zones z_do
+    on g."DOLocationID" = z_do."LocationID"
+where 
+	z_pu."Zone" = 'East Harlem North'
+  	and cast(lpep_pickup_datetime as date) = '2025-11-18'
+order by 
+	g.tip_amount desc
+limit 1;
+```
+
+### Question 7. Terraform Workflow
