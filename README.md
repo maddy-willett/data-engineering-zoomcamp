@@ -26,4 +26,12 @@ I am participating in the Data Engineering Zoomcamp because I want to transition
 **What it is:** Python is the primary language for data manipulation. `uv` is a modern, high-speed package manager that replaces standard `pip`.
 **Key takeaway:** I used Python to automate the "ETL" (Extract, Transform, Load) process—pulling raw CSV data from the web and pushing it into SQL.
 
+### Postgres
+**What is it:** A powerful, open-source relational database (SQL) that serves as the "Warehouse" or storage layer for structured data.
+**Key takeaway:** I used Postgres to store the cleaned data, allowing me to run complex SQL queries and ensure data integrity through schemas, primary keys, and relations that simple CSV/Parquet files can't provide.
+
+### Kestra 
+**What is it:** A modern orchestration platform that coordinates the flow of data between my Python scripts, the `uv` environment, and the Postgres database.
+**Key takeaway:** I used Kestra to automate the entire workflow; it acts as the "conductor," triggering the Python scripts on a schedule, managing the environment, and ensuring the data lands in Postgres without manual intervention.
+
 ---
