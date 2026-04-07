@@ -1,9 +1,10 @@
 # Data Engineering Zoomcamp 2026
 
-![Status](https://img.shields.io/badge/Zoomcamp-Week%201%20Progress-orange)
+![Status](https://img.shields.io/badge/Zoomcamp-Week%202%20Progress-orange)
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
-![Terraform](https://img.shields.io/badge/Terraform-In%20Progress-orange)
+![Terraform](https://img.shields.io/badge/Terraform-Fundamentals%20Complete-brightgreen)
+![Kestra](https://img.shields.io/badge/Kestra-In%20Progress-orange)
 
 ## My Journey
 I am participating in the Data Engineering Zoomcamp because I want to transition from data analysis to building robust data infrastructure. I enjoy the world of programming / development and am on a continuous journey of learning and building as I go! My goal is to move beyond local scripts and learn how to build production-grade pipelines in the cloud.
