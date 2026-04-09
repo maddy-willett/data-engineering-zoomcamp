@@ -28,8 +28,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
-      - PGADMIN_CONFIG_PROXY_X_HOST_COUNT=1
-      - PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT=1
     ports:
       - "8085:80"
     depends_on:
@@ -62,7 +60,9 @@ services:
       - kestra_data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
       - kestra_tmp:/tmp/kestra-wd
+      - /home/codespace/.config/gcloud:/root/.config/gcloud:ro
     environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /root/.config/gcloud/application_default_credentials.json ## add for ACD config for gcp rather than JSON keys from service acct
       KESTRA_CONFIGURATION: |
         datasources:
           postgres:
@@ -94,14 +94,3 @@ services:
       kestra_postgres:
         condition: service_started
     
-  #   to get kestra launched use this:
-    
-  #   docker run \
-  # --pull=always \
-  # --rm \
-  # -it \
-  # -p 8080:8080 \
-  # --user=root \
-  # -v /var/run/docker.sock:/var/run/docker.sock \
-  # -v /tmp:/tmp \
-  # kestra/kestra:latest server local
