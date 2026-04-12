@@ -1,5 +1,5 @@
 
-id: 09_gcp_taxi_scheduled
+id: gcp_taxi_scheduled
 namespace: zoomcamp
 description: |
   Best to add a label `backfill:true` from the UI to track executions created via a backfill.
@@ -11,12 +11,17 @@ inputs:
     displayName: Select taxi type
     values: [yellow, green]
     defaults: green
+  
+  - id: year_month
+    type: STRING
+    displayName: Year-Month (yyyy-MM)
+    defaults: "2021-01"
 
 variables:
-  file: "{{inputs.taxi}}_tripdata_{{trigger.date | date('yyyy-MM')}}.csv"
+  file: "{{inputs.taxi}}_tripdata_{{inputs.year_month}}.csv"
   gcs_file: "gs://{{kv('GCP_BUCKET_NAME')}}/{{vars.file}}"
-  table: "{{kv('GCP_DATASET')}}.{{inputs.taxi}}_tripdata_{{trigger.date | date('yyyy_MM')}}"
-  data: "{{outputs.extract.outputFiles[inputs.taxi ~ '_tripdata_' ~ (trigger.date | date('yyyy-MM')) ~ '.csv']}}"
+  table: "{{kv('GCP_DATASET')}}.{{inputs.taxi}}_tripdata_{{inputs.year_month | replace({'-': '_'})}}"
+  data: "{{outputs.extract.outputFiles[inputs.taxi ~ '_tripdata_' ~ inputs.year_month ~ '.csv']}}"
 
 tasks:
   - id: set_label
