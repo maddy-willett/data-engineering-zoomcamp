@@ -1,0 +1,25 @@
+id: hw2_ingestion_flow_parent
+namespace: zoomcamp
+
+tasks:
+  - id: for_each_month
+    type: io.kestra.plugin.core.flow.ForEach
+    values: ["2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07"]
+    tasks:
+      - id: run_green
+        type: io.kestra.plugin.core.flow.Subflow
+        flowId: gcp_taxi_scheduled ## this references the scheduled flow from module 2
+        namespace: zoomcamp
+        inputs:
+          taxi: green
+          year_month: "{{taskrun.value}}"
+        wait: true
+
+      - id: run_yellow
+        type: io.kestra.plugin.core.flow.Subflow
+        flowId: gcp_taxi_scheduled
+        namespace: zoomcamp
+        inputs:
+          taxi: yellow
+          year_month: "{{taskrun.value}}"
+        wait: true
