@@ -35,4 +35,11 @@ I am participating in the Data Engineering Zoomcamp because I want to transition
 **What is it:** A modern orchestration platform that coordinates the flow of data between my Python scripts, the `uv` environment, and the Postgres database.
 **Key takeaway:** I used Kestra to automate the entire workflow; it acts as the "conductor," triggering the Python scripts on a schedule, managing the environment, and ensuring the data lands in Postgres without manual intervention.
 
+### BigQuery & Data Warehousing
+**What is it:** A fully managed, serverless enterprise data warehouse that enables high-speed analysis of petabyte-scale datasets using standard SQL.
+**Key takeaway:** It offers extreme scalability and high availability by decoupling storage from compute, while featuring built-in ML and BI capabilities to transform raw data into insights without managing any underlying infrastructure.
+
+* BigQuery vs. PostgreSQL
+  * *What is it:* A shift from a traditional Row-Oriented Relational Database (Postgres) designed for transactional tasks (OLTP) to a Columnar Data Warehouse (BigQuery) optimized for massive analytical processing (OLAP).
+  * *Key takeaway:* While Postgres struggles with complex aggregations on large datasets, BigQuery excels at analytical speed because its columnar storage only reads the specific columns needed, and its serverless architecture allows it to scale to thousands of CPUs instantly—something a single Postgres instance simply cannot do.
 ---
