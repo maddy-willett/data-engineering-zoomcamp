@@ -1,0 +1,7 @@
+# Creating this to install each time I open my codespace to reduce redundant tasks (this is for GCS & BigQuery requirements)
+
+google-cloud-bigquery
+google-cloud-storage
+google-api-core
+
+# to install just run pip install -r requirements.txt in this folder
