@@ -46,4 +46,8 @@ I am participating in the Data Engineering Zoomcamp because I want to transition
 * BigQuery vs. PostgreSQL
   * *What is it:* A shift from a traditional Row-Oriented Relational Database (Postgres) designed for transactional tasks (OLTP) to a Columnar Data Warehouse (BigQuery) optimized for massive analytical processing (OLAP).
   * *Key takeaway:* While Postgres struggles with complex aggregations on large datasets, BigQuery excels at analytical speed because its columnar storage only reads the specific columns needed, and its serverless architecture allows it to scale to thousands of CPUs instantly, something a single Postgres instance simply cannot do.
+
+### dbt
+**What is it:** A transformation framework that allows me to write modular SQL to turn raw data in BigQuery into clean, modeled tables for analysis.
+**Key takeaway:** I used dbt to handle the "T" in ELT (Extract, Load, Transform); it allows me to apply version control, testing, and documentation to my data warehouse, ensuring that complex NYC taxi data is standardized and reliable before it reaches any dashboards.
 ---
