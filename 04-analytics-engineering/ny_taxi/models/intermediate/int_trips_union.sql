@@ -9,5 +9,9 @@ yellow_tripdata as (
 ),
 
 trips_unioned as (
-    
+    select * from green_tripdata
+    union all
+    select * from yellow_tripdata
 )
+
+select * from trips_unioned

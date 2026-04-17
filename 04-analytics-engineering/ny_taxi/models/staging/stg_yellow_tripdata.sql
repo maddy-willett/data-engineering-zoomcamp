@@ -1,9 +1,9 @@
 select 
     -- identifiers
-    cast(vendorid as int) as vendor_id,
-    cast(ratecodeid as int) as rate_code_id,
-    cast(pulocationid as int) as pickup_location_id,
-    cast(dolocationid as int) as dropoff_location_id,
+    cast(vendorid as int64) as vendor_id,
+    cast(ratecodeid as int64) as rate_code_id,
+    cast(pulocationid as int64) as pickup_location_id,
+    cast(dolocationid as int64) as dropoff_location_id,
 
     -- timestamps
     cast(tpep_pickup_datetime as timestamp) as pickup_datetime,
@@ -11,9 +11,10 @@ select
 
     -- trip details
     store_and_fwd_flag,
-    cast(passenger_count as int) as passenger_count, 
+    cast(passenger_count as int64) as passenger_count, 
     cast(trip_distance as float64) as trip_distance,
-    1 as trip_type, -- yellow taxis can only be street hail (so type = 1)
+    1 as trip_type, -- yellow taxis can only be street hail (so type = 1),
+    'Yellow' as service_type,
 
     -- payment info
     cast(fare_amount as numeric) as fare_amount,
@@ -22,9 +23,9 @@ select
     cast(tip_amount as numeric) as tip_amount,
     cast(tolls_amount as numeric) as tolls_amount,
     cast(improvement_surcharge as numeric) as improvement_surcharge,
-    0 as ehail_fee
+    0 as ehail_fee,
     cast(total_amount as numeric) as total_amount,
-    cast(payment_type as int) as passenger_type
+    cast(payment_type as int64) as payment_type
 
 from 
     {{ source('raw_data', 'external_yellow_tripdata') }}

@@ -1,9 +1,9 @@
 select 
     -- identifiers
-    cast(vendorid as int) as vendor_id,
-    cast(ratecodeid as int) as rate_code_id,
-    cast(pulocationid as int) as pickup_location_id,
-    cast(dolocationid as int) as dropoff_location_id,
+    cast(vendorid as int64) as vendor_id,
+    cast(ratecodeid as int64) as rate_code_id,
+    cast(pulocationid as int64) as pickup_location_id,
+    cast(dolocationid as int64) as dropoff_location_id,
 
     -- timestamps
     cast(lpep_pickup_datetime as timestamp) as pickup_datetime,
@@ -11,9 +11,10 @@ select
 
     -- trip details
     store_and_fwd_flag,
-    cast(passenger_count as int) as passenger_count, 
+    cast(passenger_count as int64) as passenger_count, 
     cast(trip_distance as float64) as trip_distance,
-    cast(trip_type as int) as trip_type,
+    cast(trip_type as int64) as trip_type,
+    'Green' as service_type,
 
     -- payment info
     cast(fare_amount as numeric) as fare_amount,
@@ -24,7 +25,7 @@ select
     cast(ehail_fee as numeric) as ehail_fee,
     cast(improvement_surcharge as numeric) as improvement_surcharge,
     cast(total_amount as numeric) as total_amount,
-    cast(payment_type as int) as passenger_type
+    cast(payment_type as int64) as payment_type
 
 from 
     {{ source('raw_data', 'external_green_tripdata') }}
