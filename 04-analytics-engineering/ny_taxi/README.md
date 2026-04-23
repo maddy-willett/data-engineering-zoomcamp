@@ -61,8 +61,13 @@
 ## Test folder
 
  * A place to put assertions in SQL format
- * A place for singular tests
- * If this SQL command returns more than 0 rows, the dbt build fails (e.g. if the sum of a percentage column is > 100, then this will alert the error)
+ * Test types: 
+    1. **Singular tests**: If a SQL command returns more than 0 rows, the dbt build fails (e.g. if the sum of a percentage column is > 100, then this will alert the error)
+    2. **Source freshness**: Metadata checks that compare the latest timestamp in a source table to a defined threshold to ensure data is up to date
+    3. **Generic tests**: Reusable, parameterized tests (like `unique` or `not_null`) defined in a YAML file that validate standard data constraints.
+    4. **Customer generic tests**: SQL files, located inside the "tests" folder under a sub-folder named "generic" that allow you to apply complex, repeatable validation logic across multiple models via YAML
+    5. **Unit tests**: Validations that use static "mock" data to verify that your SQL transformation logic produces the correct output before running on real data (Used for complex rolling windows / case functions / etc.)  
+    6. **Model contracts**: Strict schema enforcements that prevent a model from building if the resulting table does not exactly match the column names and data types defined in the YAML
 
 ## dbt_project.yml file
 
